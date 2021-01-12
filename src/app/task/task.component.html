@@ -1,0 +1,149 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="wrapper">
+  <div class="sidebar">
+    <div class="na">
+      <h4>Toggi Track <i class="fa fa-bell-o" aria-hidden="true"></i> </h4>
+    </div>
+    <ul>
+      <li><a href="#"><i class="fa fa-clock-o" aria-hidden="true"></i> Timer </a></li>
+      <li><a href="#"><i class="fa fa-bug" aria-hidden="true"></i> Reports </a></li>
+      <li><a href="#"><i class="fa fa-address-card-o" aria-hidden="true"></i> Insight </a></li>
+      <li><a routerLink="/dashboard" routerLinkActive="active"><i class="fa fa-file" aria-hidden="true"></i>
+          projects</a>
+      </li>
+      <li><a href="#"><i class="fa fa-clipboard" aria-hidden="true"></i> ng serClients </a></li>
+      <li><a href="#"><i class="fa fa-users" aria-hidden="true"></i> Team </a></li>
+      <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings </a></li>
+      <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i> {{user_name}}</a></li>
+    </ul>
+  </div>
+  <div class="main_content">
+    <div class="header"> What have you done?
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Client</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Team<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Task</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">List</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Show In Active
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+            <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Crete a Projects</button>   -->
+            <ng-template #content let-modal>
+              <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title"></h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="form-group">
+                    <label for="Task Name">Task Name</label>
+                    <div class="input-group">
+                      <input id="Task Name" class="form-control" placeholder="text" name="dp" ngbDatepicker
+                        #dp="ngbDatepicker">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="dp.toggle()" type="button"></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="Task Name">Task description</label>
+                    <div class="input-group">
+                      <input id="Task description" class="form-control" placeholder="text" name="dp" ngbDatepicker
+                        #dp="ngbDatepicker">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="dp.toggle()" type="button"></button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">submit</button>
+              </div>
+            </ng-template>
+            <ng-template #content let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Add Task</h4>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="Taskadd" (ngSubmit)="savetask(Taskadd.value)" autocomplete="off">
+                  <div class="form-group">
+                    <label class="col-form-label">TaskName</label>
+                    <input formControlName="name" type="text" placeholder="TaskName" class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+                    <!-- <div *ngIf="ProjectName.invalid && ProjectName.touched" class="text-danger">ProjectName is Required</div> -->
+                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                      <div *ngIf="f.name.errors.required">TaskName is required</div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label">TaskDescription</label>
+                    <input formControlName="description" type="text" placeholder="TaskDescription" class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f.description.errors }">
+                    <!-- <div *ngIf="ProjectDescription.invalid && ProjectDescription.touched" class="text-danger">ProjectDescription is Required</div> -->
+                    <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                      <div *ngIf="f.description.errors.required">TaskDescription is required</div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="submit" (click)="c('')">Save</button>
+                  </div>
+                </form>
+              </div>
+            </ng-template>
+            <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Create a Task</button>
+            <hr>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <div class="input">
+              <input [(ngModel)]="Task" name="Task" placeholder="Serach any Fields" aria-label="Search">
+            </div>
+            <td>
+              <li><a [routerLink]="['/login']" value="deleteAll" (click)="deleteAll()">Logout</a></li>
+            </td>
+          </form>
+        </div>
+      </nav>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th (click)="sort('name')">TaskName </th>
+          <th (click)="sort('description')"> TaskDescription</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of datas | orderBy: key : Sorting |  customerFilter:Task">
+          <td>{{data.name}}</td>
+          <td>{{data.description}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
